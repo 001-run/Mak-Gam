@@ -454,7 +454,7 @@ ProcessDagger(dagger *Dagger, hero *Hero, float Dt)
 internal void
 ProcessPlayerAction(hero *Hero, input_state *Input, float Dt)
 {
-  if(Input->Controllers[0].RightBumper.IsDown && Input->Controllers[0].RightBumper.WasReleasedSinceLastAction)
+  if(Input->Controllers[0].RightBumper.IsDown && !Input->Controllers[0].RightBumper.AwaitingReleaseSinceLastAction)
   {
     if(Hero->Dagger.State == RESTING)
     {
@@ -463,16 +463,16 @@ ProcessPlayerAction(hero *Hero, input_state *Input, float Dt)
       Hero->Dagger.State = FIRED;
      
     }
-    Input->Controllers[0].RightBumper.WasReleasedSinceLastAction = false;
+    Input->Controllers[0].RightBumper.AwaitingReleaseSinceLastAction = true;
   }
  
-  if (Input->Controllers[0].LeftBumper.IsDown && Input->Controllers[0].RightBumper.WasReleasedSinceLastAction)
+  if (Input->Controllers[0].LeftBumper.IsDown && !Input->Controllers[0].RightBumper.AwaitingReleaseSinceLastAction)
   {
     if(Hero->Dagger.State == STUCK)
     {
       Hero->Dagger.State = RETURNING;
     }
-    Input->Controllers[0].LeftBumper.WasReleasedSinceLastAction = false;
+    Input->Controllers[0].LeftBumper.AwaitingReleaseSinceLastAction = true;
   }
 }
 
@@ -493,13 +493,13 @@ WarpToBaddie(hero *Hero)
 internal void
 ProcessPlayerBattleAction(hero* Hero, input_state *Input, game_memory *Memory, float Dt)
 {
-  if (Input->Controllers[0].LeftBumper.IsDown && Input->Controllers[0].LeftBumper.WasReleasedSinceLastAction)
+  if (Input->Controllers[0].LeftBumper.IsDown && !Input->Controllers[0].LeftBumper.AwaitingReleaseSinceLastAction)
   { 
     PullDaggerBack(Hero);
-    Input->Controllers[0].LeftBumper.WasReleasedSinceLastAction = false;
+    Input->Controllers[0].LeftBumper.AwaitingReleaseSinceLastAction = true;
     Memory->GameState = INGAME;
   }
-  else if (Input->Controllers[0].RightBumper.IsDown && Input->Controllers[0].RightBumper.WasReleasedSinceLastAction)
+  else if (Input->Controllers[0].RightBumper.IsDown && !Input->Controllers[0].RightBumper.AwaitingReleaseSinceLastAction)
   {
     switch (Memory->Scene->Hero.Dagger.LastBattleChoice)
     {
@@ -516,7 +516,7 @@ ProcessPlayerBattleAction(hero* Hero, input_state *Input, game_memory *Memory, f
         WarpToBaddie(Hero);
       } break;
     }
-    Input->Controllers[0].RightBumper.WasReleasedSinceLastAction = false;
+    Input->Controllers[0].RightBumper.AwaitingReleaseSinceLastAction = true;
   }
 }
 

@@ -207,7 +207,7 @@ UpdateButton(button_state *Button, bool IsDown)
   Button->IsDown = IsDown;
   if (!IsDown)
   {
-    Button->WasReleasedSinceLastAction = true;
+    Button->AwaitingReleaseSinceLastAction = false;
   }
 }
 
@@ -261,15 +261,6 @@ main(int argc, char* args[])
 
   float Dt;
   input_state Input = {};
-  
-  for (int ControllerIndex = 0; ControllerIndex < CONTROLLER_MAX; ++ControllerIndex)
-  {
-    controller_state *Controller = &Input.Controllers[ControllerIndex];
-    for (int ButtonIndex = 0; ButtonIndex < BUTTONCOUNT; ++ButtonIndex)
-    {
-      Controller->Buttons[ButtonIndex].WasReleasedSinceLastAction = true;
-    }
-  }
 
   scene Scene = {};
   game_memory *GameMemory = (game_memory*)Memory.AllocatedSpace;
