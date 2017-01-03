@@ -253,7 +253,9 @@ main(int argc, char* args[])
   DebugTools.FillBox = DebugFillBox;
   DebugTools.SetColor = DebugSetColor;
 
-  game_functions GameFunctions;
+	SDL_JoystickID JoystickIDs[4];
+
+	game_functions GameFunctions;
   LoadGameFunctions(&GameFunctions);
 
   memory Memory;
@@ -310,6 +312,26 @@ main(int argc, char* args[])
 				{
 					GlobalRunning = false;
 				} break;
+				case SDL_CONTROLLERDEVICEADDED:
+				{
+					SDL_ControllerDeviceEvent Event = e.cdevice;
+					DebugPrint("Added Which:%u\n", Event.which);
+
+					if(Event.which == 0)
+					{
+						Controller1 = SDL_GameControllerOpen(0);
+					}
+				} break;
+				case SDL_CONTROLLERDEVICEREMOVED:
+				{
+					SDL_ControllerDeviceEvent Event = e.cdevice;
+
+					DebugPrint("Removed Which:%u\n", Event.which);
+					if(Event.which == 0)
+					{
+						SDL_GameControllerClose(Controller1);
+					}
+				} break;
 				case SDL_CONTROLLERAXISMOTION:
 				{
 					SDL_ControllerAxisEvent Event = e.caxis;
@@ -327,8 +349,9 @@ main(int argc, char* args[])
 
 					if(Event.which < CONTROLLER_MAX)
 					{
+						DebugPrint("Controller:%u\n", Event.which);
 						// Todo(sigmasleep): Add timing
-						controller_state* Controller = &Input.Controllers[Event.which];
+						controller_state* Controller = &Input.Controllers[0];
 
             float NormalizedValue = Event.value < 0 ?
               Event.value / 32768.f :
@@ -383,7 +406,7 @@ main(int argc, char* args[])
 					if(Event.which < CONTROLLER_MAX)
 					{
 						// Todo(sigmasleep): Add timing
-						controller_state *Controller = &Input.Controllers[Event.which];
+						controller_state *Controller = &Input.Controllers[0];
             switch(Event.button)
 						{
 							case SDL_CONTROLLER_BUTTON_DPAD_UP:
@@ -442,6 +465,10 @@ main(int argc, char* args[])
               UpdateButton(&Controller->Right, IsDown);
 						} break;
 					}
+				} break;
+				default:
+				{
+					DebugPrint("%u\n", e.type);
 				} break;
 			}
 		}
