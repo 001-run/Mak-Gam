@@ -95,8 +95,6 @@ struct hero
 	float DirectionFacing;
 	float Radius;
 	float HalfHeight;
-  bool RightBumperNotReleased;
-  bool LeftBumperNotReleased;
    
   dagger Dagger;
 };
