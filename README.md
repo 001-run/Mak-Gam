@@ -12,7 +12,8 @@ _extreme analogstick-sensitivity_.
 
 ![Pushy pushy](http://i.imgur.com/l9mDupK.gif)
 
-!Note that a control is required to test the demo.
+!A controller is required to test the demo.
+_An Xbox360 controller was used to playtest this project._
 
 Installation
 ------------
@@ -33,6 +34,7 @@ Usage
 | Left AnalogStick | Movement |
 
 Note that even super-slight movement can change the player avatar's direction.  
+  
 Through attempts in debugging and refining player control, I found that values
 in the deadzone are still reliable to define direction. In fact, deadzone values
 are actually pretty reliable in terms of precision. It's just that the physical
@@ -54,5 +56,3 @@ dared push myself into such an arduous project were it not for [Recurse
 Center](https://www.recurse.com/). And, I would not have dared to re-evaluate how
 I code were it not for [Casey
 Muratori](https://mollyrocket.com/casey/about.html).
-
-yay  
