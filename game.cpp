@@ -388,7 +388,7 @@ MovePlayer(hero *Hero, input_state *Input, float Dt)
     }
   }
 }
-
+#if 0
 internal void
 ProcessDagger(dagger *Dagger, hero *Hero, float Dt)
 {
@@ -523,6 +523,7 @@ ProcessPlayerBattleAction(hero* Hero, input_state *Input, game_memory *Memory, f
     Input->Controllers[0].RightBumper.WasReleasedSinceLastAction = false;
   }
 }
+#endif
 
 internal void
 RenderDebugArt(game_memory *Memory)
@@ -653,12 +654,12 @@ RenderDebugArt(game_memory *Memory)
   }*/
 
   GlobalDebugTools->SetColor(255, 255, 255, 255);
-  GlobalDebugTools->DrawCircle(
-    Memory->Scene->Hero.Dagger.Position.X,
-    Memory->Scene->Hero.Dagger.Position.Y,
-    Memory->Scene->Hero.Dagger.Radius,
-    12
-  );
+//  GlobalDebugTools->DrawCircle(
+//    Memory->Scene->Hero.Dagger.Position.X,
+//    Memory->Scene->Hero.Dagger.Position.Y,
+//    Memory->Scene->Hero.Dagger.Radius,
+//    12
+//  );
 
   GlobalDebugTools->DrawCircle(
     80, 80, 50, 50
@@ -691,49 +692,27 @@ RenderDebugArt(game_memory *Memory)
   );
 }
 
-/*
-UpdateGame(game_memory Memory, float Dt)
-{
-  MovePlayer(&Memory->Scene->Hero, Memory->Input, Dt);
-  ProcessDagger(&Memory->Scene->Hero.Dagger,
-    &Memory->Scene->Hero, Dt);
-  
-  if (Memory->GameState == BATTLESCREEN)
-  {
-    CollideWithBaddie(&Memory->Scene->Hero, Memory->Scene->Hero.Dagger.BaddieStuckTo);
-  }
-  else
-  {
-    for (int BaddieIndex = 0; BaddieIndex < Memory->Scene->BaddieCount; BaddieIndex++)
-    {
-      CollideWithBaddie(&Memory->Scene->Hero, &Memory->Scene->Baddies[BaddieIndex]);
-      CollideDaggerWithBaddie(&Memory->Scene->Hero.Dagger, &Memory->Scene->Baddies[BaddieIndex], Memory);
-    }
-  }
-}
-*/
-
 internal void
 ProcessLogics(game_memory *Memory, float Dt)
 {
   switch (Memory->GameState)
   {
-    case BATTLESCREEN:
-    {
-      Memory->TimeSpeed = 0.03f;
-      Memory->BattleScreenTimer -= Dt;
-      if (Memory->BattleScreenTimer <= 0)
-      {
-        Memory->GameState = INGAME;
-        PullDaggerBack(&Memory->Scene->Hero);
-      }
-      ProcessPlayerBattleAction(&Memory->Scene->Hero, Memory->Input, Memory, Dt * Memory->TimeSpeed);
-      BaddieMovement(Memory->Scene->Hero.Dagger.BaddieStuckTo, Dt * Memory->TimeSpeed);
-    } break;
+//    case BATTLESCREEN:
+//    {
+//      Memory->TimeSpeed = 0.03f;
+//      Memory->BattleScreenTimer -= Dt;
+//      if (Memory->BattleScreenTimer <= 0)
+//      {
+//        Memory->GameState = INGAME;
+//        PullDaggerBack(&Memory->Scene->Hero);
+//      }
+//      ProcessPlayerBattleAction(&Memory->Scene->Hero, Memory->Input, Memory, Dt * Memory->TimeSpeed);
+//      BaddieMovement(Memory->Scene->Hero.Dagger.BaddieStuckTo, Dt * Memory->TimeSpeed);
+//    } break;
     case INGAME:
     {
       Memory->TimeSpeed = 1.f;
-      ProcessPlayerAction(&Memory->Scene->Hero, Memory->Input, Dt);
+//      ProcessPlayerAction(&Memory->Scene->Hero, Memory->Input, Dt);
       for (int BaddieIndex = 0; BaddieIndex < Memory->Scene->BaddieCount; BaddieIndex++)
       {
         BaddieMovement(&Memory->Scene->Baddies[BaddieIndex], Dt);
@@ -742,8 +721,8 @@ ProcessLogics(game_memory *Memory, float Dt)
   }
 
   MovePlayer(&Memory->Scene->Hero, Memory->Input, Dt * Memory->TimeSpeed);
-  ProcessDagger(&Memory->Scene->Hero.Dagger,
-                &Memory->Scene->Hero, Dt * Memory->TimeSpeed);
+//  ProcessDagger(&Memory->Scene->Hero.Dagger,
+//                &Memory->Scene->Hero, Dt * Memory->TimeSpeed);
 }
 
 internal void
