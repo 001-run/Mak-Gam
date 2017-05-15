@@ -12,7 +12,7 @@ _extreme analogstick-sensitivity_.
 
 ![Pushy pushy](http://i.imgur.com/l9mDupK.gif)
 
-!A controller is required to test the demo.
+!A controller is required to test the demo.  
 _An Xbox360 controller was used to playtest this project._
 
 Installation
