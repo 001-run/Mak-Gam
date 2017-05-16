@@ -3,7 +3,7 @@ Mak-Gam
 A fledgling, wanna-be-real-game-but-currently-just-a-prototype, game-engine.
 This project's design is very much inspired by the Handmade Hero series, namely
 coding style and system architecture (Including probably the greatest
-architectural desicion ever, loading the game code in as a dll to the platform
+architectural decision ever, loading the game code in as a dll to the platform
 code).  
   
 In addition to hot code-reloading, this project explores circle-circle
